@@ -16,6 +16,23 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static int rgbvalue(String hex) {
+        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+        int r = (color >> 16) & 0xFF;
+        return  r;
+    }
+
+    public static int greenvalue(String hex) {
+        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+        int g = (color >> 8) & 0xFF;
+        return  g;
+    }
+    public static int bluevalue(String hex) {
+        int color = (int) Long.parseLong(hex.replace("#", ""), 16);
+        int b = (color >> 0) & 0xFF;
+        return b;
+    }
+
 
     @SuppressLint("WrongConstant")
     @Override
@@ -38,22 +55,31 @@ public class MainActivity extends AppCompatActivity {
 
         final Random random= new Random();
 
-        button.setOnClickListener((m )-> {
-            int red= random.nextInt();
+        button.setWidth(20);
 
-            int green= random.nextInt();
-            int blue= random.nextInt();
-            textView.setText("COLOR: "+"R "+String.valueOf(red)+"   G "+String.valueOf(green+" B "+String.valueOf(blue)  ));
-            textView.setTextColor(Color.rgb(red,green,blue));
+        button.setOnClickListener((m )-> {
+            int red =  random.nextInt(999999);
+            int rd = rgbvalue(String.valueOf(red));
+            int green =  random.nextInt(999999);
+            int gn = greenvalue(String.valueOf(red));
+
+            int blue =  random.nextInt(999999);
+            int bu = bluevalue(String.valueOf(red));
+
+
+            textView.setText("COLOR:" + String.valueOf(rd)+"r "+" "+String.valueOf(gn)+"g "+String.valueOf(bu)+"b");
+            textView.setTextColor(Color.rgb(rd,gn,bu));
 
         });
         LinearLayout linearlayoutobj = new LinearLayout(this);
         linearlayoutobj.setOrientation(LinearLayout.VERTICAL);
+        button.setLayoutParams(new LinearLayout.LayoutParams(300, 100));
+        button.setGravity(Gravity.CENTER);
 
         linearlayoutobj.addView(textView);
         linearlayoutobj.addView(button);
         linearlayoutobj.setGravity(Gravity.CENTER);
-        linearlayoutobj.setPadding(40,40,40,40);
+        linearlayoutobj.setPadding(20,20,20,20);
         setContentView(linearlayoutobj);
 
     }
